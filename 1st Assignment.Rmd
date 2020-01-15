@@ -1,0 +1,31 @@
+---
+title: "Peer-graded-Assignment-R-Markdown-and-Leaflet"
+author: "Gonzalo Canto"
+date: "15 January 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+ 
+
+##London Locations   
+
+*Size of the Bubbles: Population by council*
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(leaflet)
+df <- data.frame(pop = runif(10, min = 100, max =2300),
+                        lat = runif(10, min = 51.4878982, max =51.5878982),
+                        lng = runif(10, min = -0.14, max = -0.04),
+                col = sample(c("red", "blue", "green"), 20, replace = TRUE),
+                 stringsAsFactors = FALSE)
+
+df %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircles(weight = 1, radius = sqrt(df$pop) * 30)%>%
+  addCircleMarkers(color = df$col) %>%
+  addLegend(labels = c("Police Station","Fire Brigade","Hospital"), colors = c("blue", "red", "green"))
+```
+
